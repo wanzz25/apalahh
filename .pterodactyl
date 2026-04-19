@@ -1,0 +1,4 @@
+# Pterodactyl startup config
+# Startup command: npm run setup && npm start
+# Stop command: ^C
+# Node version: 18 or 20
