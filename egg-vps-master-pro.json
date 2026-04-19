@@ -1,0 +1,53 @@
+{
+  "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PANEL",
+  "meta": {
+    "version": "PTDL_v2",
+    "update_url": null
+  },
+  "exported_at": "2024-01-01T00:00:00+00:00",
+  "name": "VPS Master Pro",
+  "author": "admin@vpsmaster.pro",
+  "description": "VPS Monitoring Dashboard built with React + Express. Supports custom domain via Cloudflare.",
+  "features": ["eula"],
+  "docker_images": {
+    "ghcr.io/parkervcp/yolks:nodejs_18": "ghcr.io/parkervcp/yolks:nodejs_18",
+    "ghcr.io/parkervcp/yolks:nodejs_20": "ghcr.io/parkervcp/yolks:nodejs_20"
+  },
+  "file_denylist": [],
+  "startup": "npm run setup && npm start",
+  "config": {
+    "files": "{}",
+    "startup": "{\"done\": \"VPS Master Pro\"}",
+    "logs": "{}",
+    "stop": "^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/bash\n# VPS Master Pro - Installation Script\napt-get update -y\napt-get install -y git curl\n\n# Install Node.js 20\ncurl -fsSL https://deb.nodesource.com/setup_20.x | bash -\napt-get install -y nodejs\n\necho \"Node: $(node --version)\"\necho \"NPM:  $(npm --version)\"\n\n# Clone or copy files\nif [ -d /mnt/server ]; then\n  cd /mnt/server\n  if [ -f package.json ]; then\n    echo \"Files already present, installing dependencies...\"\n  fi\nfi\n\necho \"Installation complete!\"",
+      "container": "ghcr.io/parkervcp/yolks:nodejs_20",
+      "entrypoint": "bash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Server Port",
+      "description": "Port yang digunakan server (harus sama dengan allocation di Pterodactyl)",
+      "env_variable": "PORT",
+      "default_value": "3000",
+      "user_viewable": true,
+      "user_editable": false,
+      "rules": "required|numeric|between:1024,65535",
+      "field_type": "text"
+    },
+    {
+      "name": "Node Environment",
+      "description": "Environment mode (production/development)",
+      "env_variable": "NODE_ENV",
+      "default_value": "production",
+      "user_viewable": true,
+      "user_editable": false,
+      "rules": "required|string",
+      "field_type": "text"
+    }
+  ]
+}
